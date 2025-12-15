@@ -1,0 +1,7 @@
+###############################################################################
+# NULLPLATFORM - terraform.tfvars.example
+# Uso: terraform apply -var-file="../common.tfvars" -var-file="terraform.tfvars"
+###############################################################################
+
+# Scope Definition Configuration
+service_path = "/azure"             #Folder inside https://github.com/nullplatform/scopes to look for the code to execute

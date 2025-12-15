@@ -1,0 +1,47 @@
+###############################################################################
+# INFRASTRUCTURE - terraform.tfvars.example
+# Uso: terraform apply -var-file="../common.tfvars" -var-file="terraform.tfvars"
+###############################################################################
+
+# Azure Provider Configuration
+azure_subscription_id = ""                 #You need to get this from Azure UI
+azure_tenant_id       = ""                 #You need to get this from Azure UI
+azure_client_id       = ""                 #You need to create a new APP Regristration ClientID
+azure_client_secret   = ""                 #You need to create a new APP Regristration Secret
+
+# Resource Group Configuration
+location = ""                              #Azure Region
+
+# Networking Configuration - Example
+address_space = ["10.31.0.0/16"]
+
+subnets_definition = {
+  aks = {
+    name             = "subnet-1"
+    address_prefixes = ["10.31.0.0/24"]
+  }
+  application_gateway = {
+    name             = "subnet-2"
+    address_prefixes = ["10.31.1.0/24"]
+  }
+  private_endpoints = {
+    name             = "subnet-3"
+    address_prefixes = ["10.31.2.0/24"]
+  }
+}
+
+# Nullplatform Configuration
+cloud_provider = "azure"
+account_slug   = "poc"                      #Any name to identify the purpose of usage of this configuration
+
+# Agent Configuration
+public_gateway_name  = "gateway-public"
+private_gateway_name = "gateway-private"
+dns_type             = "external_dns"
+image_tag            = "latest"              #Branch of https://github.com/nullplatform/scopes repository to use
+
+# Cert Manager Configuration
+cert_manager_namespace = "gateways"
+cloudflare_token       = ""
+cloudflare_secret_name = "cloudflare-api-token-secret" 
+cloudflare_enabled     = true
