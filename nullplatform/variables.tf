@@ -23,4 +23,8 @@ variable "service_path" {
   default     = "k8s"
 }
 
-
+variable "environments" {
+  type        = list(string)
+  description = "The list of environments"
+  default     = ["development", "staging", "production"]
+}
