@@ -28,3 +28,8 @@ variable "environments" {
   description = "The list of environments"
   default     = ["development", "staging", "production"]
 }
+
+variable "service_path_scheduled_task" {
+  description = "Path to the service directory within the repository structure"
+  type        = string
+}

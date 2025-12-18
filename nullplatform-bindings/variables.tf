@@ -73,3 +73,16 @@ variable "tags_selectors" {
   type        = map(string)
 }
 
+variable "service_path_scheduled_task" {
+  description = "Path to the service directory within the repository structure"
+  type        = string
+  default     = "/scheduled_task"
+}
+
+variable "override_repo_path" {
+  description = "Path to the nullplatform scope repository"
+  type        = string
+  default     = "/root/.np/nullplatform/scopes"
+}
+
+

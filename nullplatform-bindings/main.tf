@@ -40,3 +40,17 @@ module "scope_definition_channel_association" {
   service_specification_slug = data.terraform_remote_state.nullplatform.outputs.service_slug
   tags_selectors             = var.tags_selectors
 }
+
+
+module "scope_definition_channel_association_scheduled_task" {
+  source                     = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition_agent_association?ref=v1.12.4"
+  nrn                        = var.nrn
+  np_api_key                 = var.np_api_key
+  service_specification_id   = data.terraform_remote_state.nullplatform.outputs.service_specification_id_scheduled_task
+  service_specification_slug = data.terraform_remote_state.nullplatform.outputs.service_slug_scheduled_task
+  tags_selectors             = var.tags_selectors
+  service_path = "k8s"
+  overrides_service_path = var.service_path_scheduled_task
+  override_repo_path = var.override_repo_path
+  enabled_override = true
+}
