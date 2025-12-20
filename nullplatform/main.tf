@@ -100,3 +100,12 @@ resource "nullplatform_approval_action_policy_association" "PCI" {
   approval_action_id  = nullplatform_approval_action.deployment_create.id
   approval_policy_id  = nullplatform_approval_policy.PCI.id
 }
+
+
+
+module "service_definition_endpoint_exposer" {
+  source       = "git::https://github.com/nullplatform/tofu-modules.git//services/endpoint-exposer?ref=feature/endpoint-exposer"
+  nrn          = var.nrn
+}
+
+

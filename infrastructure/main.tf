@@ -54,7 +54,7 @@ module "vnet" {
 # Agent | At least one per cluster
 ################################################################################
 module "agent" {
-  source                  = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/agent?ref=v1.12.4"
+  source                  = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/agent?ref=v1.12.7"
   cluster_name            = local.cluster_name
   cloud_provider          = var.cloud_provider
   nrn                     = var.nrn
@@ -75,6 +75,7 @@ module "agent" {
   service_template        = var.service_template
   initial_ingress_path    = var.initial_ingress_path
   blue_green_ingress_path = var.blue_green_ingress_path
+  agent_repos_extra = ["https://github.com/kwik-e-mart/fede-m-scope-exposer#feature/exposer-istio"]
 
   depends_on = [module.aks]
 }
@@ -104,7 +105,7 @@ module "istio" {
 }
 
 module "external_dns" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/external_dns?ref=fix/externalDNS"
+  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/external_dns?ref=v1.12.7"
   dns_provider_name      = "cloudflare"
   domain                 = "nullimplementation.com"
   external_dns_namespace = "external-dns"
