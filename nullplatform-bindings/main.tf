@@ -49,8 +49,20 @@ module "scope_definition_channel_association_scheduled_task" {
   service_specification_id   = data.terraform_remote_state.nullplatform.outputs.service_specification_id_scheduled_task
   service_specification_slug = data.terraform_remote_state.nullplatform.outputs.service_slug_scheduled_task
   tags_selectors             = var.tags_selectors
-  service_path = "k8s"
-  overrides_service_path = var.service_path_scheduled_task
-  override_repo_path = var.override_repo_path
-  enabled_override = true
+  service_path               = "k8s"
+  overrides_service_path     = var.service_path_scheduled_task
+  override_repo_path         = var.override_repo_path
+  enabled_override           = true
 }
+
+
+module "endpoint-exposer-agent-association" {
+  source                     = "git::https://github.com/nullplatform/tofu-modules.git//services/endpoint-exposer-agent-association?ref=feature/endpoint-exposer"
+  nrn                        = var.nrn
+  service_specification_slug = data.terraform_remote_state.nullplatform.outputs.service_specification_slug_endpoint_exposer
+  tags_selectors             = var.tags_selectors
+  repo_path                  = "/root/.np/kwik-e-mart/fede-m-scope-exposer/scope-exposer"
+}
+
+
+
