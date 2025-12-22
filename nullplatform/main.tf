@@ -32,8 +32,6 @@ module "service_definition_endpoint_exposer" {
   nrn    = var.nrn
 }
 
-
-
 module "dimensions" {
   source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/dimensions?ref=v1.12.4"
   nrn          = var.nrn
