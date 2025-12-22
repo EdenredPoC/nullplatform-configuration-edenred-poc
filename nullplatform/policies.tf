@@ -1,7 +1,7 @@
 #Policies Configuration
 resource "nullplatform_approval_policy" "PCI" {
-  nrn    = var.nrn
-  name   = "PCI"
+  nrn  = var.nrn
+  name = "PCI"
   conditions = jsonencode({
     "application.metadata.metadata_application.PCI" = "No"
   })
@@ -9,7 +9,7 @@ resource "nullplatform_approval_policy" "PCI" {
 
 
 resource "nullplatform_approval_action" "deployment_create" {
-  nrn = var.nrn
+  nrn    = var.nrn
   entity = "deployment"
   action = "deployment:create"
 
@@ -18,7 +18,7 @@ resource "nullplatform_approval_action" "deployment_create" {
   }
 
   on_policy_success = "approve"
-  on_policy_fail = "manual"
+  on_policy_fail    = "manual"
 
   lifecycle {
     ignore_changes = [policies]
@@ -26,7 +26,7 @@ resource "nullplatform_approval_action" "deployment_create" {
 }
 
 resource "nullplatform_approval_action_policy_association" "PCI" {
-  approval_action_id  = nullplatform_approval_action.deployment_create.id
-  approval_policy_id  = nullplatform_approval_policy.PCI.id
+  approval_action_id = nullplatform_approval_action.deployment_create.id
+  approval_policy_id = nullplatform_approval_policy.PCI.id
 }
 

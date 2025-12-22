@@ -9,11 +9,11 @@ module "scope_definition" {
 }
 
 module "scope_definition_scheduled_task" {
-  source       = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition?ref=v1.12.7"
-  nrn          = var.nrn
-  np_api_key   = var.np_api_key
-  service_path = var.service_path_scheduled_task
-  service_spec_name = "Scheduled Task"
+  source                   = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition?ref=v1.12.7"
+  nrn                      = var.nrn
+  np_api_key               = var.np_api_key
+  service_path             = var.service_path_scheduled_task
+  service_spec_name        = "Scheduled Task"
   service_spec_description = "Allows you to deploy periodic jobs in Kubernetes"
   action_spec_names = [
     "create-scope",
@@ -24,12 +24,12 @@ module "scope_definition_scheduled_task" {
     "rollback-deployment",
     "delete-deployment",
     "trigger"
-]
+  ]
 }
 
 module "service_definition_endpoint_exposer" {
-  source       = "git::https://github.com/nullplatform/tofu-modules.git//services/endpoint-exposer?ref=feature/endpoint-exposer"
-  nrn          = var.nrn
+  source = "git::https://github.com/nullplatform/tofu-modules.git//services/endpoint-exposer?ref=feature/endpoint-exposer"
+  nrn    = var.nrn
 }
 
 

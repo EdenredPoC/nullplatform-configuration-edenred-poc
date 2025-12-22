@@ -9,25 +9,25 @@ resource "nullplatform_metadata_specification" "metadata_application" {
   schema = jsonencode({
     type = "object"
     properties = {
-      "APPLICATION OWNER": {
-        "description": "Name of Application Owner",
-        "type": "string"
+      "APPLICATION OWNER" : {
+        "description" : "Name of Application Owner",
+        "type" : "string"
       },
-      "PCI": {
-        "description": "Is it a PCI application?",
-        "type": "string",
-        "enum": ["Yes", "No"]
+      "PCI" : {
+        "description" : "Is it a PCI application?",
+        "type" : "string",
+        "enum" : ["Yes", "No"]
       },
-      "SLO": {
-        "description": "Application SLO Criteria",
-        "type": "string",
-        "enum": ["Low", "Medium", "Critical" , "High"]
+      "SLO" : {
+        "description" : "Application SLO Criteria",
+        "type" : "string",
+        "enum" : ["Low", "Medium", "Critical", "High"]
       }
     }
-    "required": [
+    "required" : [
       "APPLICATION OWNER",
       "PCI"
     ],
     additionalProperties = false
-  }) 
+  })
 }

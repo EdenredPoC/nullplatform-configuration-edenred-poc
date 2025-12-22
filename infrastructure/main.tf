@@ -1,10 +1,10 @@
 module "acr" {
-  source                   = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/acr?ref=v1.12.4"
-  containerregistry_name   = local.containerregistry_name
-  resource_group_name      = module.resource_group.resource_group_name
-  location                 = var.location
-  subscription_id          = var.azure_subscription_id
-  sku                      = "Basic"
+  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/acr?ref=v1.12.4"
+  containerregistry_name = local.containerregistry_name
+  resource_group_name    = module.resource_group.resource_group_name
+  location               = var.location
+  subscription_id        = var.azure_subscription_id
+  sku                    = "Basic"
   #change to some number if sku is premium
   retention_policy_in_days = null
 
@@ -75,7 +75,7 @@ module "agent" {
   service_template        = var.service_template
   initial_ingress_path    = var.initial_ingress_path
   blue_green_ingress_path = var.blue_green_ingress_path
-  agent_repos_extra = ["https://github.com/kwik-e-mart/fede-m-scope-exposer#feature/exposer-istio"]
+  agent_repos_extra       = ["https://github.com/kwik-e-mart/fede-m-scope-exposer#feature/exposer-istio"]
 
   depends_on = [module.aks]
 }
@@ -116,13 +116,13 @@ module "external_dns" {
 }
 
 module "prometheus" {
-  source             = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/prometheus?ref=v1.10.0"
-  np_api_key         = var.np_api_key
-  nrn                = var.nrn
-  install_prometheus = var.install_prometheus
-  dimensions         = var.prometheus_dimensions
+  source               = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/prometheus?ref=v1.10.0"
+  np_api_key           = var.np_api_key
+  nrn                  = var.nrn
+  install_prometheus   = var.install_prometheus
+  dimensions           = var.prometheus_dimensions
   prometheus_namespace = var.prometheus_namespace
 
   # Temporary fix
-  prometheus_url       = ""
+  prometheus_url = ""
 }

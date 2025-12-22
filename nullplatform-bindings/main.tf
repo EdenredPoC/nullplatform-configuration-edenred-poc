@@ -49,10 +49,10 @@ module "scope_definition_channel_association_scheduled_task" {
   service_specification_id   = data.terraform_remote_state.nullplatform.outputs.service_specification_id_scheduled_task
   service_specification_slug = data.terraform_remote_state.nullplatform.outputs.service_slug_scheduled_task
   tags_selectors             = var.tags_selectors
-  service_path = "k8s"
-  overrides_service_path = var.service_path_scheduled_task
-  override_repo_path = var.override_repo_path
-  enabled_override = true
+  service_path               = "k8s"
+  overrides_service_path     = var.service_path_scheduled_task
+  override_repo_path         = var.override_repo_path
+  enabled_override           = true
 }
 
 
