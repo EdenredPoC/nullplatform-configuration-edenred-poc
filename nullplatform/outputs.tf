@@ -24,8 +24,15 @@ output "service_slug_scheduled_task" {
 }
 
 
-
+#exposer 1
 output "service_specification_slug_endpoint_exposer" {
   description = "Slug of the service created by scope_definition for scheduled task"
   value       = module.service_definition_endpoint_exposer.service_specification_slug
+}
+
+
+#expose 2
+output "service_specification_slug" {
+  description = "Slug of the service created by scope_definition for scheduled task"
+  value       = module.endpoint_exposer_service_definition.service_specification_slug
 }

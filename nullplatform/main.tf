@@ -39,5 +39,14 @@ module "dimensions" {
   environments = var.environments
 }
 
-
+module "endpoint_exposer_service_definition" {
+  source = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/service_definition?ref=feature/endpoint-exposer"
+  nrn          = var.nrn
+  np_api_key   = var.np_api_key
+  git_repo = "nullplatform/services"
+  git_ref      = "feat/endpoint-exposer"
+  git_service_path = "endpoint-exposer/entrypoint"
+  service_name        = "Endpoint Exposer 2"
+  service_description = "Endpoint Exposer Service to expose Endpoints"
+}
 
