@@ -66,3 +66,9 @@ module "endpoint-exposer-agent-association" {
 
 
 
+module "service_definition_agent_association" {
+  source = "git::https://github.com/nullplatform/tofu-modules.git//services/endpoint-exposer?ref=feature/endpoint-exposer"
+  np_api_key = var.np_api_key
+  service_definition=   data.terraform_remote_state.nullplatform.outputs.service_specification_slug
+  agent_tags = var.agent_tags
+}
