@@ -12,7 +12,7 @@ resource "nullplatform_approval_policy" "coverage" {
   nrn    = var.nrn
   name   = "Code Coverage"
   conditions = jsonencode({
-    "build.metadata.coverage.coverage" = { "$gte": 80 }
+    "build.metadata.coverage.code.coverage" = { "$gte": 80 }
   })
 }
 
@@ -21,7 +21,7 @@ resource "nullplatform_approval_policy" "security" {
   nrn    = var.nrn
   name   = "Security"
   conditions = jsonencode({
-    "build.metadata.security.critical" = { "$eq": 0 }
+    "build.metadata.security.security.vulnerabities.critical" = { "$eq": 0 }
   })
 }
 
