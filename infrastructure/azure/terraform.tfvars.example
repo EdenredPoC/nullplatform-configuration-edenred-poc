@@ -1,6 +1,6 @@
 ###############################################################################
 # INFRASTRUCTURE - terraform.tfvars.example
-# Uso: terraform apply -var-file="../common.tfvars" -var-file="terraform.tfvars"
+# Uso: terraform apply -var-file="../../common.tfvars" -var-file="terraform.tfvars"
 ###############################################################################
 
 # Azure Provider Configuration

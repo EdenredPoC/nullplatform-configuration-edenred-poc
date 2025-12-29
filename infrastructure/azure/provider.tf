@@ -6,7 +6,7 @@ terraform {
     }
     nullplatform = {
       source  = "nullplatform/nullplatform"
-      version = "~> 0.0.74"
+      version = "~> 0.0.75"
     }
   }
 }

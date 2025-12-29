@@ -1,7 +1,8 @@
 ###############################################################################
 # COMMON TFVARS - nullplatform-configuration-azure
 # Variables shared by all modules
-# Uso: terraform apply -var-file="../common.tfvars" -var-file="terraform.tfvars"
+# Uso: terraform apply -var-file="../../common.tfvars" -var-file="terraform.tfvars" (desde infrastructure/{cloud})
+#       terraform apply -var-file="../common.tfvars" -var-file="terraform.tfvars" (desde nullplatform/ o nullplatform-bindings/)
 ###############################################################################
 
 # Nullplatform Configuration
