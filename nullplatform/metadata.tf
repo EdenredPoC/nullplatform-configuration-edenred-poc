@@ -32,154 +32,117 @@ resource "nullplatform_metadata_specification" "metadata_application" {
   }) 
 }
 
+#Finops Example
+resource "nullplatform_metadata_specification" "coverage" {
+ name        = "Coverage Schema"
+ description = "Schema for code coverage configuration"
+ nrn         = var.nrn
+ entity      = "build"
+ metadata    = "coverage"
+
+schema = jsonencode({
+  type = "object"
+  title       = "Code Coverage Results"
+  description = "Schema for code coverage configuration"
+  properties = {
+    code = {
+      type = "object"
+      properties = {
+        coverage = {
+          type        = "number"
+          minimum     = 0
+          maximum     = 100
+          description = "Percentage of code coverage"
+        }
+        lines = {
+          type        = "integer"
+          minimum     = 0
+          description = "Total amount of code lines"
+        }
+      }
+      required = ["coverage"]
+      additionalProperties = false
+    }
+  }
+  required = ["code"]
+  additionalProperties = false
+})
+}
+
+resource "nullplatform_metadata_specification" "security" {
+  name        = "Security Schema"
+  description = "Schema for security vulnerability configuration"
+  nrn         = var.nrn
+  entity      = "build"
+  metadata    = "security"
+
+  schema = jsonencode({
+    type        = "object"
+    title       = "Security Vulnerability Results"
+    description = "Schema for security vulnerability configuration"
+    properties = {
+      security = {
+        type = "object"
+        properties = {
+          vulnerabilities = {
+            type = "object"
+            properties = {
+              high = {
+                type        = "integer"
+                minimum     = 0
+                description = "Number of high severity vulnerabilities"
+              }
+              critical = {
+                type        = "integer"
+                minimum     = 0
+                description = "Number of critical severity vulnerabilities"
+              }
+            }
+            required             = ["high", "critical"]
+            additionalProperties = false
+          }
+        }
+        required             = ["vulnerabilities"]
+        additionalProperties = false
+      }
+    }
+    required             = ["security"]
+    additionalProperties = false
+  })
+}
+
 #Finops Metadata
 resource "nullplatform_metadata_specification" "finops" {
-  name        = "Costo de Metadata"
-  description = "Costo de Metadata"
+  name        = "Finops"
+  description = "Details of Application costs"
   nrn         = var.nrn
   entity      = "application"
   metadata    = "finops"
 
   schema = jsonencode({
-    "uiSchema": {
-            "type": "VerticalLayout",
-            "elements": [
-                {
-                    "type": "HorizontalLayout",
-                    "elements": [
-                        {
-                            "type": "Control",
-                            "scope": "#/properties/costo_computo",
-                            "label": "Costo de Computo",
-                            "options": {
-                                "style": {
-                                    "fontSize": "1.5rem",
-                                    "color": "success.main"
-                                },
-                                "icon": "mdi:currency-usd"
-                            }
-                        },
-                        {
-                            "type": "Control",
-                            "scope": "#/properties/costo_total_actual",
-                            "label": "Costo Total Actual",
-                            "options": {
-                                "style": {
-                                    "fontSize": "1.5rem",
-                                    "color": "success.main"
-                                },
-                                "icon": "mdi:currency-usd"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "HorizontalLayout",
-                    "elements": [
-                        {
-                            "type": "Control",
-                            "scope": "#/properties/costo_services",
-                            "label": "Costo de Services",
-                            "options": {
-                                "style": {
-                                    "fontSize": "1.5rem",
-                                    "color": "success.main"
-                                },
-                                "icon": "mdi:currency-usd"
-                            }
-                        },
-                        {
-                            "type": "Control",
-                            "scope": "#/properties/presupuesto_asignado",
-                            "label": "Presupuesto Asignado Total",
-                            "options": {
-                                "style": {
-                                    "fontSize": "1.5rem",
-                                    "color": "warning.main"
-                                },
-                                "icon": "mdi:currency-usd"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "Control",
-                    "scope": "#/properties/pci",
-                    "label": "PCI"
-                },
-                {
-                    "type": "Control",
-                    "scope": "#/properties/owner",
-                    "label": "Responsable"
-                },
-                {
-                    "type": "Control",
-                    "scope": "#/properties/slo",
-                    "label": "SLO"
-                }
-            ]
+    "visibleOn": ["read"],
+    "type": "object",
+    "properties": {
+        "compute_cost": {
+            "description": "Application compute cost",
+            "type": "integer"
         },
-        "properties": {
-            "compute_cost": {
-                "description": "Application compute cost",
-                "type": "integer",
-                "visibleOn": [
-                    "read"
-                ]
-            },
-            "services_cost": {
-                "description": "Application services cost",
-                "minimum": 0,
-                "type": "integer",
-                "visibleOn": [
-                    "read"
-                ]
-            },
-            "current total cost": {
-                "description": "Current total cost",
-                "minimum": 0,
-                "type": "integer",
-                "visibleOn": [
-                    "read"
-                ]
-            },
-            "owner": {
-                "description": "Persona responsable de la aplicacion",
-                "enum": [
-                    "Federico Ferrari",
-                    "Silvia Accasuso",
-                    "Juan Dominguez"
-                ],
-                "type": "string"
-            },
-            "pci": {
-                "description": "Is this application PCI?",
-                "enum": [
-                    "Yes",
-                    "No"
-                ],
-                "type": "string"
-            },
-            "budget assigned": {
-                "description": "Application budget assigned",
-                "minimum": 0,
-                "type": "integer",
-                "visibleOn": [
-                    "read"
-                ]
-            },
-            "slo": {
-                "description": "What kind of SLO does this application have?",
-                "enum": [
-                    "Critical",
-                    "High",
-                    "Medium",
-                    "Low"
-                ],
-                "type": "string"
-            }
+        "services_cost": {
+            "description": "Application services cost",
+            "minimum": 0,
+            "type": "integer"           
         },
-        "required": [],
-        "type": "object"
+        "current_total_cost": {
+            "description": "Current total cost",
+            "minimum": 0,
+            "type": "integer"
+        },
+        "budget_assigned": {
+            "description": "Application budget assigned",
+            "minimum": 0,
+            "type": "integer"
+        }
+    },
+    "required": []
   })
 }
