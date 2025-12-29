@@ -25,6 +25,22 @@ resource "nullplatform_approval_policy" "security" {
   })
 }
 
+resource "nullplatform_approval_policy" "respect_budget" {
+  nrn  = var.nrn
+  name = "Respect Budget"
+  conditions = jsonencode({
+    "application": {
+    "$expr" = {
+      "$lte" = [
+        "$application.metadata.finops.current_total_cost",
+        "$application.metadata.finops.budget_assigned"
+      ]
+    }
+    }
+  }) 
+}
+
+
 resource "nullplatform_approval_action" "deployment_create" {
   nrn    = var.nrn
   entity = "deployment"
@@ -42,6 +58,30 @@ resource "nullplatform_approval_action" "deployment_create" {
   }
 }
 
+
+resource "nullplatform_approval_action" "scope_create" {
+  nrn    = var.nrn
+  entity = "scope"
+  action = "scope:create"
+
+  dimensions = {
+    environment = "production"
+  }
+
+  on_policy_success = "approve"
+  on_policy_fail    = "manual"
+  lifecycle {
+    ignore_changes = [
+      policies
+    ]
+  }
+  depends_on = [ nullplatform_approval_policy.respect_budget ]
+}
+
+
+
+
+
 resource "nullplatform_approval_action_policy_association" "coverage" {
   approval_action_id = nullplatform_approval_action.deployment_create.id
   approval_policy_id = nullplatform_approval_policy.coverage.id
@@ -56,3 +96,22 @@ resource "nullplatform_approval_action_policy_association" "PCI" {
   approval_action_id = nullplatform_approval_action.deployment_create.id
   approval_policy_id = nullplatform_approval_policy.PCI.id
 }
+
+
+resource "nullplatform_approval_action_policy_association" "respect_budget" {
+  approval_action_id = nullplatform_approval_action.scope_create.id
+  approval_policy_id = nullplatform_approval_policy.respect_budget.id
+
+  depends_on = [ nullplatform_approval_action.scope_create,
+                nullplatform_approval_policy.respect_budget ]
+}
+
+
+
+
+
+
+
+
+    
+
