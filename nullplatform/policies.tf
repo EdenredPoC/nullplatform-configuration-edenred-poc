@@ -21,7 +21,7 @@ resource "nullplatform_approval_policy" "security" {
   nrn    = var.nrn
   name   = "Security"
   conditions = jsonencode({
-    "build.metadata.security.security.vulnerabities.critical" = { "$eq": 0 }
+    "build.metadata.security.security.vulnerabilities.critical" = { "$eq": 0 }
   })
 }
 
