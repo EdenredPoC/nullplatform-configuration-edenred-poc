@@ -9,64 +9,64 @@ resource "nullplatform_metadata_specification" "metadata_application" {
   schema = jsonencode({
     type = "object"
     properties = {
-      "APPLICATION OWNER": {
-        "description": "Name of Application Owner",
-        "type": "string"
+      "APPLICATION OWNER" : {
+        "description" : "Name of Application Owner",
+        "type" : "string"
       },
-      "PCI": {
-        "description": "Is it a PCI application?",
-        "type": "string",
-        "enum": ["Yes", "No"]
+      "PCI" : {
+        "description" : "Is it a PCI application?",
+        "type" : "string",
+        "enum" : ["Yes", "No"]
       },
-      "SLO": {
-        "description": "Application SLO Criteria",
-        "type": "string",
-        "enum": ["Low", "Medium", "Critical" , "High"]
+      "SLO" : {
+        "description" : "Application SLO Criteria",
+        "type" : "string",
+        "enum" : ["Low", "Medium", "Critical", "High"]
       }
     }
-    "required": [
+    "required" : [
       "APPLICATION OWNER",
       "PCI"
     ],
     additionalProperties = false
-  }) 
+  })
 }
 
 #Finops Example
 resource "nullplatform_metadata_specification" "coverage" {
- name        = "Coverage Schema"
- description = "Schema for code coverage configuration"
- nrn         = var.nrn
- entity      = "build"
- metadata    = "coverage"
-
-schema = jsonencode({
-  type = "object"
-  title       = "Code Coverage Results"
+  name        = "Coverage Schema"
   description = "Schema for code coverage configuration"
-  properties = {
-    code = {
-      type = "object"
-      properties = {
-        coverage = {
-          type        = "number"
-          minimum     = 0
-          maximum     = 100
-          description = "Percentage of code coverage"
+  nrn         = var.nrn
+  entity      = "build"
+  metadata    = "coverage"
+
+  schema = jsonencode({
+    type        = "object"
+    title       = "Code Coverage Results"
+    description = "Schema for code coverage configuration"
+    properties = {
+      code = {
+        type = "object"
+        properties = {
+          coverage = {
+            type        = "number"
+            minimum     = 0
+            maximum     = 100
+            description = "Percentage of code coverage"
+          }
+          lines = {
+            type        = "integer"
+            minimum     = 0
+            description = "Total amount of code lines"
+          }
         }
-        lines = {
-          type        = "integer"
-          minimum     = 0
-          description = "Total amount of code lines"
-        }
+        required             = ["coverage"]
+        additionalProperties = false
       }
-      required = ["coverage"]
-      additionalProperties = false
     }
-  }
-  required = ["code"]
-  additionalProperties = false
-})
+    required             = ["code"]
+    additionalProperties = false
+  })
 }
 
 resource "nullplatform_metadata_specification" "security" {
@@ -120,29 +120,29 @@ resource "nullplatform_metadata_specification" "finops" {
   metadata    = "finops"
 
   schema = jsonencode({
-    "visibleOn": ["read"],
-    "type": "object",
-    "properties": {
-        "compute_cost": {
-            "description": "Application compute cost",
-            "type": "integer"
-        },
-        "services_cost": {
-            "description": "Application services cost",
-            "minimum": 0,
-            "type": "integer"           
-        },
-        "current_total_cost": {
-            "description": "Current total cost",
-            "minimum": 0,
-            "type": "integer"
-        },
-        "budget_assigned": {
-            "description": "Application budget assigned",
-            "minimum": 0,
-            "type": "integer"
-        }
+    "visibleOn" : ["read"],
+    "type" : "object",
+    "properties" : {
+      "compute_cost" : {
+        "description" : "Application compute cost",
+        "type" : "integer"
+      },
+      "services_cost" : {
+        "description" : "Application services cost",
+        "minimum" : 0,
+        "type" : "integer"
+      },
+      "current_total_cost" : {
+        "description" : "Current total cost",
+        "minimum" : 0,
+        "type" : "integer"
+      },
+      "budget_assigned" : {
+        "description" : "Application budget assigned",
+        "minimum" : 0,
+        "type" : "integer"
+      }
     },
-    "required": []
+    "required" : []
   })
 }

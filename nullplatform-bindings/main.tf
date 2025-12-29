@@ -55,20 +55,22 @@ module "scope_definition_channel_association_scheduled_task" {
   enabled_override           = true
 }
 
-
-module "endpoint-exposer-agent-association" {
-  source                     = "git::https://github.com/nullplatform/tofu-modules.git//services/endpoint-exposer-agent-association?ref=feature/endpoint-exposer"
-  nrn                        = var.nrn
-  service_specification_slug = data.terraform_remote_state.nullplatform.outputs.service_specification_slug_endpoint_exposer
-  tags_selectors             = var.tags_selectors
-  repo_path                  = "/root/.np/kwik-e-mart/fede-m-scope-exposer/scope-exposer"
-}
-
-
-
-module "service_definition_agent_association" {
-  source = "git::https://github.com/nullplatform/tofu-modules.git//services/endpoint-exposer?ref=feature/endpoint-exposer"
-  np_api_key = var.np_api_key
-  service_definition=   data.terraform_remote_state.nullplatform.outputs.service_specification_slug
-  agent_tags = var.agent_tags
+module "service_definition_channel_association_endpoint_exposer" {
+  source                   = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/service_definition_agent_association?ref=feature/endpoint-exposer"
+  nrn                      = var.nrn
+  service_path             = "/root/.np/nullplatform/services/endpoint-exposer"
+  service_slug             = data.terraform_remote_state.nullplatform.outputs.service_specification_slug_endpoint_exposer
+  service_specification_id = data.terraform_remote_state.nullplatform.outputs.service_specification_id_endpoint_exposer                        
+  np_api_key               = var.np_api_key
+  tags_selectors = var.tags_selectors
+  agent_command = {
+    type = "exec"
+    data = {
+      cmdline = "/root/.np/nullplatform/services/endpoint-exposer/entrypoint/entrypoint",
+      environment = {
+        NP_ACTION_CONTEXT = "'$${NOTIFICATION_CONTEXT}'"
+        INGRESS_TYPE      = "istio"
+      }
+    } 
+  }
 }
