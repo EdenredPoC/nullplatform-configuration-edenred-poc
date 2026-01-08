@@ -62,7 +62,7 @@ module "service_definition_channel_association_endpoint_exposer" {
   service_slug             = data.terraform_remote_state.nullplatform.outputs.service_specification_slug_endpoint_exposer
   service_specification_id = data.terraform_remote_state.nullplatform.outputs.service_specification_id_endpoint_exposer                        
   np_api_key               = var.np_api_key
-  tags_selectors = var.tags_selectors
+  tags_selectors           = var.tags_selectors
   agent_command = {
     type = "exec"
     data = {

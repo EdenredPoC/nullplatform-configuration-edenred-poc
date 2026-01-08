@@ -39,15 +39,12 @@ module "service_definition_endpoint_exposer" {
   nrn              = var.nrn
   np_api_key       = var.np_api_key
   git_repo         = "nullplatform/services"
-  git_ref          = "feat/endpoint-exposer"
+  git_ref          = "feature/endpoint-exposer"
   git_service_path = "endpoint-exposer"
   service_name     = "Endpoint Exposer"
 
   service_description = "Endpoint Exposer Service to expose Endpoints"
   use_tpl_files       = true # Set to true if using .tpl files, false for .json files
-  tags_selectors = {
-    "environment" = "production"
-    "region"      = "us-east-1"
-  }
+  tags_selectors = var.tags_selectors
 }
 
