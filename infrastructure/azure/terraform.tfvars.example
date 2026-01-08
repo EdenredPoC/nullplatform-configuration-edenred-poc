@@ -28,6 +28,10 @@ subnets_definition = {
     name             = "subnet-3"
     address_prefixes = ["10.31.2.0/24"]
   }
+  load_balancer = {
+    name             = "subnet-4"
+    address_prefixes = ["10.31.3.0/24"]
+  }
 }
 
 # Nullplatform Configuration

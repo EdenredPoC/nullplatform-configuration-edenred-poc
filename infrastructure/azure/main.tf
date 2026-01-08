@@ -11,12 +11,13 @@ module "acr" {
 }
 
 module "aks" {
-  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=v1.12.4"
+  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=fix/add-azure-network-ontributor"
   resource_group_name = module.resource_group.resource_group_name
   location            = module.resource_group.resource_group_location
   cluster_name        = local.cluster_name
   subscription_id     = var.azure_subscription_id
   vnet_subnet_id      = module.vnet.subnet_ids_by_name["subnet-2"]
+  vnet_id             = module.vnet.resource_id
   system_pool_vm_size = "Standard_B2ms"
   user_pool_vm_size   = "Standard_B2ms"
 
