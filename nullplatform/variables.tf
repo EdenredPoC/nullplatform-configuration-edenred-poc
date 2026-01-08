@@ -33,3 +33,8 @@ variable "service_path_scheduled_task" {
   description = "Path to the service directory within the repository structure"
   type        = string
 }
+
+variable "tags_selectors" {
+  description = "Map of tags used to select and filter channels and agents"
+  type        = map(string)
+}
