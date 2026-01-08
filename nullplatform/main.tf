@@ -39,7 +39,7 @@ module "service_definition_endpoint_exposer" {
   nrn              = var.nrn
   np_api_key       = var.np_api_key
   git_repo         = "nullplatform/services"
-  git_ref          = "feat/endpoint-exposer"
+  git_ref          = "feature/endpoint-exposer"
   git_service_path = "endpoint-exposer"
   service_name     = "Endpoint Exposer"
 
