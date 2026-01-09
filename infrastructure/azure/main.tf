@@ -11,7 +11,7 @@ module "acr" {
 }
 
 module "aks" {
-  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=fix/add-azure-network-ontributor"
+  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=v1.17.1"
   resource_group_name = module.resource_group.resource_group_name
   location            = module.resource_group.resource_group_location
   cluster_name        = local.cluster_name
@@ -20,9 +20,9 @@ module "aks" {
   vnet_id             = module.vnet.resource_id
   system_pool_vm_size = "Standard_B2ms"
   user_pool_vm_size   = "Standard_B2ms"
+  
 
   depends_on = [module.resource_group, module.vnet]
-
 }
 
 module "dns" {
@@ -51,6 +51,14 @@ module "vnet" {
   subscription_id     = var.azure_subscription_id
 }
 
+module "private_dns" {
+  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/private_dns?ref=v1.17.1"
+  domain_name     = local.domain_name
+  resource_group  = local.resource_group_name
+  subscription_id = var.azure_subscription_id
+}
+
+
 ###############################################################################
 # Agent | At least one per cluster
 ################################################################################
@@ -76,7 +84,7 @@ module "agent" {
   service_template        = var.service_template
   initial_ingress_path    = var.initial_ingress_path
   blue_green_ingress_path = var.blue_green_ingress_path
-  agent_repos_extra       = ["https://github.com/kwik-e-mart/fede-m-scope-exposer#feature/exposer-istio"]
+  agent_repos_extra       = ["https://github.com/nullplatform/services"]
 
   depends_on = [module.aks]
 }
