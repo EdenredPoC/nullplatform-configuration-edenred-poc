@@ -90,10 +90,11 @@ module "agent" {
 }
 
 module "base" {
-  source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/base?ref=v1.12.4"
+  source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/base?ref=v1.17.1"
   np_api_key   = var.np_api_key
   nrn          = var.nrn
   k8s_provider = var.k8s_provider
+  gateway_internal_enabled = true
 }
 
 module "cert_manager" {
