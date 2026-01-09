@@ -95,6 +95,7 @@ module "base" {
   nrn          = var.nrn
   k8s_provider = var.k8s_provider
   gateway_internal_enabled = true
+  nullplatform_base_helm_version = "2.29.1"
 }
 
 module "cert_manager" {
@@ -106,6 +107,8 @@ module "cert_manager" {
   cloudflare_secret_name = var.cloudflare_secret_name
   cloudflare_token       = var.cloudflare_token
   cert_manager_namespace = var.cert_manager_namespace
+  cert_manager_config_version = "2.29.1"
+  
 
   depends_on = [module.base, module.aks]
 }
