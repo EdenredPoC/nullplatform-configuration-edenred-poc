@@ -98,16 +98,16 @@ module "base" {
 }
 
 module "cert_manager" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/cert_manager?ref=v1.12.4"
+  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/cert_manager?ref=v1.17.1"
+  cloud_provider         = "cloudflare"
   account_slug           = var.account_slug
   hosted_zone_name       = local.domain_name
-  cloudflare_enabled     = var.cloudflare_enabled
+  private_domain_name    = local.domain_name
   cloudflare_secret_name = var.cloudflare_secret_name
   cloudflare_token       = var.cloudflare_token
   cert_manager_namespace = var.cert_manager_namespace
 
   depends_on = [module.base, module.aks]
-
 }
 
 module "istio" {
