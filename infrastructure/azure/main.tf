@@ -107,7 +107,7 @@ module "cert_manager" {
   cloudflare_secret_name = var.cloudflare_secret_name
   cloudflare_token       = var.cloudflare_token
   cert_manager_namespace = var.cert_manager_namespace
-  cert_manager_config_version = "2.29.1"
+  cert_manager_config_version = "2.29.2"
   
 
   depends_on = [module.base, module.aks]
