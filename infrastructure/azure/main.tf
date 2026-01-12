@@ -11,7 +11,7 @@ module "acr" {
 }
 
 module "aks" {
-  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=fix/add-azure-network-ontributor"
+  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=v1.17.1"
   resource_group_name = module.resource_group.resource_group_name
   location            = module.resource_group.resource_group_location
   cluster_name        = local.cluster_name
@@ -31,6 +31,19 @@ module "dns" {
   resource_group  = module.resource_group.resource_group_name
   subscription_id = var.azure_subscription_id
 
+}
+
+module "private_dns" {
+  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/private_dns?ref=v1.17.2"
+  domain_name     = local.domain_name
+  resource_group  = module.resource_group.resource_group_name
+  subscription_id = var.azure_subscription_id
+  virtual_network_links = [
+    {
+      vnet_id              = module.vnet.resource_id
+      registration_enabled = false
+    }
+  ]
 }
 
 module "resource_group" {
@@ -86,6 +99,7 @@ module "base" {
   np_api_key   = var.np_api_key
   nrn          = var.nrn
   k8s_provider = var.k8s_provider
+  gateway_internal_enabled = true
 }
 
 module "cert_manager" {
