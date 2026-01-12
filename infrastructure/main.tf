@@ -11,7 +11,7 @@ module "acr" {
 }
 
 module "aks" {
-  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=v1.17.1"
+  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=fix/add-azure-network-ontributor"
   resource_group_name = module.resource_group.resource_group_name
   location            = module.resource_group.resource_group_location
   cluster_name        = local.cluster_name
@@ -21,8 +21,8 @@ module "aks" {
   system_pool_vm_size = "Standard_B2ms"
   user_pool_vm_size   = "Standard_B2ms"
 
-  depends_on = [module.resource_group, module.vnet]
 
+  depends_on = [module.resource_group, module.vnet]
 }
 
 module "dns" {
@@ -89,27 +89,31 @@ module "agent" {
   service_template        = var.service_template
   initial_ingress_path    = var.initial_ingress_path
   blue_green_ingress_path = var.blue_green_ingress_path
-  agent_repos_extra       = ["https://github.com/kwik-e-mart/fede-m-scope-exposer#feature/exposer-istio"]
+  agent_repos_extra       = ["https://github.com/nullplatform/services"]
 
   depends_on = [module.aks]
 }
 
 module "base" {
-  source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/base?ref=v1.12.4"
+  source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/base?ref=v1.17.1"
   np_api_key   = var.np_api_key
   nrn          = var.nrn
   k8s_provider = var.k8s_provider
   gateway_internal_enabled = true
+  nullplatform_base_helm_version = "2.29.1"
 }
 
 module "cert_manager" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/cert_manager?ref=v1.12.4"
+  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/cert_manager?ref=v1.17.1"
+  cloud_provider         = "cloudflare"
   account_slug           = var.account_slug
   hosted_zone_name       = local.domain_name
-  cloudflare_enabled     = var.cloudflare_enabled
+  private_domain_name    = local.domain_name
   cloudflare_secret_name = var.cloudflare_secret_name
   cloudflare_token       = var.cloudflare_token
   cert_manager_namespace = var.cert_manager_namespace
+  cert_manager_config_version = "2.29.2"
+
 
   depends_on = [module.base, module.aks]
 
