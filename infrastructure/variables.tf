@@ -185,3 +185,12 @@ variable "install_prometheus" {
   type        = bool
   default     = true
 }
+
+variable "kube_context" {
+  type    = string
+  default = null 
+}
+
+variable "kubeconfig_path" {
+    default = "~/.kube/config"
+}

@@ -23,29 +23,11 @@ provider "nullplatform" {
 }
 
 provider "kubernetes" {
-  #when use module aks
-  host                   = module.aks.host
-  client_certificate     = base64decode(module.aks.admin_client_certificate)
-  client_key             = base64decode(module.aks.admin_client_key)
-  cluster_ca_certificate = base64decode(module.aks.admin_cluster_ca_certificate)
-  #when use data
-  # host                   = data.azurerm_kubernetes_cluster.this.kube_admin_config[0].host
-  # client_certificate     = base64decode(data.azurerm_kubernetes_cluster.this.kube_admin_config[0].client_certificate)
-  # client_key             = base64decode(data.azurerm_kubernetes_cluster.this.kube_admin_config[0].client_key)
-  # cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.this.kube_admin_config[0].cluster_ca_certificate)
+  config_path = var.kubeconfig_path
 }
-
 provider "helm" {
   kubernetes = {
-    #when use module aks
-    host                   = module.aks.host
-    client_certificate     = base64decode(module.aks.admin_client_certificate)
-    client_key             = base64decode(module.aks.admin_client_key)
-    cluster_ca_certificate = base64decode(module.aks.admin_cluster_ca_certificate)
-    #when use data
-    # host                   = data.azurerm_kubernetes_cluster.this.kube_admin_config[0].host
-    # client_certificate     = base64decode(data.azurerm_kubernetes_cluster.this.kube_admin_config[0].client_certificate)
-    # client_key             = base64decode(data.azurerm_kubernetes_cluster.this.kube_admin_config[0].client_key)
-    # cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.this.kube_admin_config[0].cluster_ca_certificate)
+    config_path    = var.kubeconfig_path
+    config_context = var.kube_context
   }
 }
