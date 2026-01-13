@@ -25,13 +25,6 @@ module "aks" {
   depends_on = [module.resource_group, module.vnet]
 }
 
-module "dns" {
-  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/dns?ref=v1.20.1"
-  domain_name     = local.domain_name
-  resource_group  = module.resource_group.resource_group_name
-  subscription_id = var.azure_subscription_id
-
-}
 
 module "private_dns" {
   source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/private_dns?ref=v1.20.1"
