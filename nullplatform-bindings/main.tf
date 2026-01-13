@@ -43,7 +43,7 @@ module "scope_definition_channel_association" {
 
 
 module "scope_definition_channel_association_scheduled_task" {
-  source                     = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition_agent_association?ref=v1.12.4"
+  source                     = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition_agent_association?ref=v1.12.2"
   nrn                        = var.nrn
   np_api_key                 = var.np_api_key
   service_specification_id   = data.terraform_remote_state.nullplatform.outputs.service_specification_id_scheduled_task

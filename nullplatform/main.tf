@@ -2,14 +2,16 @@
 # K8s Scope Definition | Set this at organization level
 ###############################################################################
 module "scope_definition" {
-  source       = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition?ref=v1.12.4"
+  source       = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition?ref=v1.20.2"
   nrn          = var.nrn
   np_api_key   = var.np_api_key
   service_path = var.service_path
+  service_spec_name = "Containers Default"
+  service_spec_description = "Allows you to deploy in K8S clusters"
 }
 
 module "scope_definition_scheduled_task" {
-  source                   = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition?ref=v1.12.7"
+  source                   = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/scope_definition?ref=v1.20.2"
   nrn                      = var.nrn
   np_api_key               = var.np_api_key
   service_path             = var.service_path_scheduled_task
@@ -28,14 +30,14 @@ module "scope_definition_scheduled_task" {
 }
 
 module "dimensions" {
-  source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/dimensions?ref=v1.12.4"
+  source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/dimensions?ref=v1.20.2"
   nrn          = var.nrn
   np_api_key   = var.np_api_key
   environments = var.environments
 }
 
 module "service_definition_endpoint_exposer" {
-  source           = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/service_definition?ref=feature/endpoint-exposer"
+  source           = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/service_definition?ref=v1.20.2"
   nrn              = var.nrn
   np_api_key       = var.np_api_key
   git_repo         = "nullplatform/services"
@@ -47,4 +49,3 @@ module "service_definition_endpoint_exposer" {
   use_tpl_files       = true # Set to true if using .tpl files, false for .json files
   tags_selectors = var.tags_selectors
 }
-
