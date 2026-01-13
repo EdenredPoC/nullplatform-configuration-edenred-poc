@@ -21,7 +21,6 @@ module "aks" {
   system_pool_vm_size = "Standard_B2ms"
   user_pool_vm_size   = "Standard_B2ms"
 
-
   depends_on = [module.resource_group, module.vnet]
 }
 
