@@ -1,13 +1,4 @@
 
-module "code_repository" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/code_repository?ref=v1.20.2"
-  np_api_key             = var.np_api_key
-  nrn                    = var.nrn
-  git_provider           = "github"
-  github_organization    = var.github_organization
-  github_installation_id = var.github_installation_id
-}
-
 module "asset_repository" {
   source       = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/asset/docker_server?ref=v1.20.2"
   nrn          = var.nrn

@@ -1,48 +1,8 @@
-module "acr" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/acr?ref=v1.20.1"
-  containerregistry_name = local.containerregistry_name
-  resource_group_name    = module.resource_group.resource_group_name
-  location               = var.location
-  subscription_id        = var.azure_subscription_id
-  sku                    = "Basic"
-  #change to some number if sku is premium
-  retention_policy_in_days = null
-
-}
-
-module "aks" {
-  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=v1.20.1"
-  resource_group_name = module.resource_group.resource_group_name
-  location            = module.resource_group.resource_group_location
-  cluster_name        = local.cluster_name
-  subscription_id     = var.azure_subscription_id
-  vnet_subnet_id      = module.vnet.subnet_ids_by_name["subnet-2"]
-  vnet_id             = module.vnet.resource_id
-  system_pool_vm_size = "Standard_B2ms"
-  user_pool_vm_size   = "Standard_B2ms"
-
-  depends_on = [module.resource_group, module.vnet]
-}
-
 module "dns" {
   source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/dns?ref=v1.20.1"
   domain_name     = local.domain_name
   resource_group  = module.resource_group.resource_group_name
   subscription_id = var.azure_subscription_id
-
-}
-
-module "private_dns" {
-  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/private_dns?ref=v1.20.1"
-  domain_name     = local.domain_name
-  resource_group  = module.resource_group.resource_group_name
-  subscription_id = var.azure_subscription_id
-  virtual_network_links = [
-    {
-      vnet_id              = module.vnet.resource_id
-      registration_enabled = false
-    }
-  ]
 }
 
 module "resource_group" {
@@ -53,15 +13,6 @@ module "resource_group" {
   tags                = {}
 }
 
-module "vnet" {
-  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/vnet?ref=v1.12.4"
-  address_space       = var.address_space
-  vnet_name           = local.vnet_name
-  location            = var.location
-  resource_group_name = module.resource_group.resource_group_name
-  subnets_definition  = var.subnets_definition
-  subscription_id     = var.azure_subscription_id
-}
 
 ###############################################################################
 # Agent | At least one per cluster
@@ -90,7 +41,6 @@ module "agent" {
   blue_green_ingress_path = var.blue_green_ingress_path
   agent_repos_extra       = ["https://github.com/nullplatform/services"]
 
-  depends_on = [module.aks]
 }
 
 module "base" {
@@ -111,8 +61,7 @@ module "cert_manager" {
   cloudflare_token       = var.cloudflare_token
   cert_manager_namespace = var.cert_manager_namespace
 
-  depends_on = [module.base, module.aks]
-
+  depends_on = [module.base]
 }
 
 module "istio" {
@@ -125,8 +74,6 @@ module "external_dns" {
   domain_filters         = "nullimplementation.com"
   external_dns_namespace = "external-dns"
   cloudflare_token       = var.cloudflare_token
-
-  depends_on = [module.aks]
 }
 
 module "prometheus" {
