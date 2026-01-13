@@ -1,10 +1,3 @@
-module "dns" {
-  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/dns?ref=v1.20.1"
-  domain_name     = local.domain_name
-  resource_group  = module.resource_group.resource_group_name
-  subscription_id = var.azure_subscription_id
-}
-
 module "resource_group" {
   source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/resource_group?ref=v1.20.1"
   resource_group_name = local.resource_group_name
