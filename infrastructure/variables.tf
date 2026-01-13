@@ -32,22 +32,6 @@ variable "location" {
   type        = string
 }
 
-################################################################################
-# Networking Configuration
-################################################################################
-
-
-variable "address_space" {
-  description = "Address space for the Virtual Network"
-  type        = list(string)
-}
-
-variable "subnets_definition" {
-  description = "Map of subnet definitions with name, address prefix and other configurations"
-  type        = any
-}
-
-
 
 ################################################################################
 # Nullplatform Configuration

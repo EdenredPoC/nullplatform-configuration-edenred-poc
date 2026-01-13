@@ -13,19 +13,6 @@ variable "np_api_key" {
   sensitive   = true
 }
 
-################################################################################
-# GitHub Configuration
-################################################################################
-
-variable "github_organization" {
-  description = "Name of the GitHub organization"
-  type        = string
-}
-
-variable "github_installation_id" {
-  description = "GitHub App Installation ID used by the agent"
-  type        = string
-}
 
 ################################################################################
 # Container Registry Authentication
