@@ -1,5 +1,5 @@
 module "acr" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/acr?ref=v1.12.4"
+  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/acr?ref=v1.20.1"
   containerregistry_name = local.containerregistry_name
   resource_group_name    = module.resource_group.resource_group_name
   location               = var.location
@@ -11,7 +11,7 @@ module "acr" {
 }
 
 module "aks" {
-  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=fix/add-azure-network-ontributor"
+  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/aks?ref=v1.20.1"
   resource_group_name = module.resource_group.resource_group_name
   location            = module.resource_group.resource_group_location
   cluster_name        = local.cluster_name
@@ -26,7 +26,7 @@ module "aks" {
 }
 
 module "dns" {
-  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/dns?ref=v1.12.4"
+  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/dns?ref=v1.20.1"
   domain_name     = local.domain_name
   resource_group  = module.resource_group.resource_group_name
   subscription_id = var.azure_subscription_id
@@ -34,7 +34,7 @@ module "dns" {
 }
 
 module "private_dns" {
-  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/private_dns?ref=v1.17.2"
+  source          = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/private_dns?ref=v1.20.1"
   domain_name     = local.domain_name
   resource_group  = module.resource_group.resource_group_name
   subscription_id = var.azure_subscription_id
@@ -47,7 +47,7 @@ module "private_dns" {
 }
 
 module "resource_group" {
-  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/resource_group?ref=v1.12.4"
+  source              = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/azure/resource_group?ref=v1.20.1"
   resource_group_name = local.resource_group_name
   location            = var.location
   subscription_id     = var.azure_subscription_id
@@ -68,7 +68,7 @@ module "vnet" {
 # Agent | At least one per cluster
 ################################################################################
 module "agent" {
-  source                  = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/agent?ref=v1.12.7"
+  source                  = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/agent?ref=v1.20.1"
   cluster_name            = local.cluster_name
   cloud_provider          = var.cloud_provider
   nrn                     = var.nrn
@@ -95,16 +95,15 @@ module "agent" {
 }
 
 module "base" {
-  source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/base?ref=v1.17.1"
+  source       = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/base?ref=v1.20.1"
   np_api_key   = var.np_api_key
   nrn          = var.nrn
   k8s_provider = var.k8s_provider
   gateway_internal_enabled = true
-  nullplatform_base_helm_version = "2.29.1"
 }
 
 module "cert_manager" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/cert_manager?ref=v1.17.1"
+  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/cert_manager?ref=v1.20.1"
   cloud_provider         = "cloudflare"
   account_slug           = var.account_slug
   hosted_zone_name       = local.domain_name
@@ -112,30 +111,27 @@ module "cert_manager" {
   cloudflare_secret_name = var.cloudflare_secret_name
   cloudflare_token       = var.cloudflare_token
   cert_manager_namespace = var.cert_manager_namespace
-  cert_manager_config_version = "2.29.2"
-
 
   depends_on = [module.base, module.aks]
 
 }
 
 module "istio" {
-  source = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/istio?ref=v1.12.4"
+  source = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/istio?ref=v1.20.1"
 }
 
 module "external_dns" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/external_dns?ref=v1.12.7"
+  source                 = "git::https://github.com/nullplatform/tofu-modules.git///infrastructure/commons/external_dns?ref=v1.20.2"
   dns_provider_name      = "cloudflare"
-  domain                 = "nullimplementation.com"
+  domain_filters         = "nullimplementation.com"
   external_dns_namespace = "external-dns"
-  extra_args             = []
   cloudflare_token       = var.cloudflare_token
 
   depends_on = [module.aks]
 }
 
 module "prometheus" {
-  source               = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/prometheus?ref=v1.10.0"
+  source               = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/prometheus?ref=v1.12.7"
   np_api_key           = var.np_api_key
   nrn                  = var.nrn
   install_prometheus   = var.install_prometheus

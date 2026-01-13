@@ -1,6 +1,6 @@
 
 module "code_repository" {
-  source                 = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/code_repository?ref=v1.12.4"
+  source                 = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/code_repository?ref=v1.20.2"
   np_api_key             = var.np_api_key
   nrn                    = var.nrn
   git_provider           = "github"
@@ -9,7 +9,7 @@ module "code_repository" {
 }
 
 module "asset_repository" {
-  source       = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/asset/docker_server?ref=v1.12.4"
+  source       = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/asset/docker_server?ref=v1.20.2"
   nrn          = var.nrn
   np_api_key   = var.np_api_key
   login_server = var.login_server
@@ -19,7 +19,7 @@ module "asset_repository" {
 }
 
 module "cloud_provider" {
-  source                          = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/cloud/azure/cloud?ref=v1.12.4"
+  source                          = "git::https://github.com/nullplatform/tofu-modules.git///nullplatform/cloud/azure/cloud?ref=v1.20.2"
   nrn                             = var.nrn
   domain_name                     = local.domain_name
   dimensions                      = var.dimensions
@@ -56,7 +56,7 @@ module "scope_definition_channel_association_scheduled_task" {
 }
 
 module "service_definition_channel_association_endpoint_exposer" {
-  source                   = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/service_definition_agent_association?ref=feature/endpoint-exposer"
+  source                   = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/service_definition_agent_association?ref=v1.20.2"
   nrn                      = var.nrn
   service_path             = "/root/.np/nullplatform/services/endpoint-exposer"
   service_slug             = data.terraform_remote_state.nullplatform.outputs.service_specification_slug_endpoint_exposer
