@@ -35,7 +35,7 @@ module "dimensions" {
 }
 
 module "service_definition_endpoint_exposer" {
-  source           = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/service_definition?ref=feature/endpoint-exposer"
+  source           = "git::https://github.com/nullplatform/tofu-modules.git//nullplatform/service_definition?ref=v1.20.2"
   nrn              = var.nrn
   np_api_key       = var.np_api_key
   git_repo         = "nullplatform/services"

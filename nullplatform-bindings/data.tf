@@ -5,10 +5,10 @@
 data "terraform_remote_state" "infrastructure" {
   backend = "azurerm"
   config = {
-    resource_group_name  = "rg-nullplatform-pocs-shared"
-    storage_account_name = "nullplatformdemos"
-    container_name       = "edenred-poc"
-    key                  = "infrastructure.tfstate"
+    resource_group_name  = "gti-ctp-snbx-ccoe-rg"
+    storage_account_name = "gtictptfstsas"
+    container_name       = "terraformstate"
+    key                  = "nullplatformpocinfra.tfstate"
   }
 }
 
@@ -19,9 +19,9 @@ data "terraform_remote_state" "infrastructure" {
 data "terraform_remote_state" "nullplatform" {
   backend = "azurerm"
   config = {
-    resource_group_name  = "rg-nullplatform-pocs-shared"
-    storage_account_name = "nullplatformdemos"
-    container_name       = "edenred-poc"
-    key                  = "nullplatform.tfstate"
+    resource_group_name  = "gti-ctp-snbx-ccoe-rg"
+    storage_account_name = "gtictptfstsas"
+    container_name       = "terraformstate"
+    key                  = "nullplatformpoc.tfstate"
   }
 }
